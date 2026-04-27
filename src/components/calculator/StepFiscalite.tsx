@@ -5,6 +5,7 @@ import { REGIME_LABELS, REGIME_DESCRIPTIONS } from "@/lib/tax"
 import { cn } from "@/lib/utils"
 import { Check } from "lucide-react"
 import { NumInput } from "@/components/shared/NumInput"
+import { InfoFlipCard } from "@/components/shared/InfoFlipCard"
 
 interface Props {
   inputs: CalculatorInputs
@@ -70,9 +71,17 @@ export function StepFiscalite({ inputs, onChange }: Props) {
 
       {/* TMI */}
       <div>
-        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">
-          Tranche marginale d'imposition (TMI)
-        </p>
+        <div className="flex items-center gap-1.5 mb-3">
+          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
+            Tranche marginale d'imposition (TMI)
+          </p>
+          <InfoFlipCard
+            title="Tranche Marginale d'Imposition"
+            definition="Taux d'IR appliqué à la dernière tranche de vos revenus. Les revenus fonciers s'ajoutent à vos revenus actuels et sont taxés à ce taux marginal + 17.2% de prélèvements sociaux."
+            example="Avec un TMI de 30% et des revenus fonciers nets de 5 000 €, vous payez 1 500 € d'IR + 860 € de PS = 2 360 € de taxes au total."
+            warning="C'est le taux MARGINAL, pas le taux moyen. Seul le dernier euro de revenu est taxé à ce taux — vos autres revenus restent taxés à leurs tranches respectives."
+          />
+        </div>
         <div className="flex gap-2 flex-wrap">
           {TMI_OPTIONS.map(tmi => (
             <button
@@ -104,6 +113,12 @@ export function StepFiscalite({ inputs, onChange }: Props) {
         min={0}
         step={100}
         hint="Utilisé pour calculer le taux d'effort (effort mensuel / revenus)"
+        info={{
+          title: "Revenus nets du foyer",
+          definition: "Revenus nets mensuels de l'ensemble du foyer fiscal (salaires nets, autres revenus). Sert uniquement à calculer votre taux d'effort — n'est pas transmis ni stocké.",
+          example: "Un foyer gagnant 4 500 € nets/mois avec une mensualité de 900 € a un taux d'effort de 20% — bien en dessous du seuil bancaire de 35%.",
+          warning: "Les banques calculent le taux d'effort sur les revenus bruts (avant IR). En investissement locatif, elles peuvent intégrer 70% des loyers futurs dans les revenus."
+        }}
       />
 
       {/* LMNP note */}

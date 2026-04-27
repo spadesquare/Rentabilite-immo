@@ -31,6 +31,12 @@ export function StepCharges({ inputs, onChange }: Props) {
             unit="€/mois"
             min={0}
             hint={zone && inputs.surface > 0 ? `Ref: ${(zone.loyer_m2[0] * inputs.surface).toFixed(0)}–${(zone.loyer_m2[1] * inputs.surface).toFixed(0)} €` : undefined}
+            info={{
+              title: "Loyer mensuel HC",
+              definition: "Loyer Hors Charges : ce que le locataire vous verse pour l'occupation du logement, sans les charges locatives (eau, ordures, entretien parties communes).",
+              example: "Pour un T2 de 45 m² à Toulouse péri-centre : 650–750 € HC/mois. Ajoutez 50–80 €/mois de charges pour obtenir le loyer CC.",
+              warning: "C'est le loyer HC — et non CC — qui sert de base de calcul des revenus fonciers imposables."
+            }}
           />
           <NumInput
             label="Charges récupérables"
@@ -39,6 +45,12 @@ export function StepCharges({ inputs, onChange }: Props) {
             unit="€/mois"
             min={0}
             hint="Payées par le locataire (provisions)"
+            info={{
+              title: "Charges récupérables",
+              definition: "Provisions pour charges versées par le locataire en sus du loyer HC : eau froide, entretien ascenseur, chauffage collectif, ordures ménagères…",
+              example: "En copropriété classique, les charges récupérables représentent 40–70 % des charges totales de copro, soit 50–100 €/mois pour un T2.",
+              warning: "Une régularisation annuelle est obligatoire. Si les provisions dépassent les charges réelles, vous remboursez la différence au locataire."
+            }}
           />
         </div>
       </div>
@@ -54,6 +66,12 @@ export function StepCharges({ inputs, onChange }: Props) {
             unit="€/an"
             min={0}
             hint="Total annuel (charges appelées)"
+            info={{
+              title: "Charges de copropriété",
+              definition: "Total des charges appelées par le syndic sur l'année : entretien, gardien, assurance immeuble, parties communes, provisions pour travaux.",
+              example: "Pour un T2 en copropriété classique à Toulouse : 1 500–2 500 €/an. En immeuble avec ascenseur ou gardien, comptez plus.",
+              warning: "Seule la part 'non récupérable' (à votre charge) est une vraie dépense — ajustez le curseur ci-contre selon votre copropriété."
+            }}
           />
           <div className="flex flex-col gap-1">
             <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
@@ -77,6 +95,12 @@ export function StepCharges({ inputs, onChange }: Props) {
             unit="€/an"
             min={0}
             hint={inputs.surface > 0 ? `Ref. Toulouse: ~${(inputs.surface * 18).toFixed(0)} €/an` : undefined}
+            info={{
+              title: "Taxe foncière",
+              definition: "Impôt local annuel dû par le propriétaire, calculé sur la valeur locative cadastrale du bien. Elle est intégralement à votre charge (non récupérable sur le locataire).",
+              example: "À Toulouse, comptez ~18–22 €/m²/an. Pour un T2 de 45 m², environ 800–1 000 €/an.",
+              warning: "La taxe foncière augmente régulièrement (+27% sur 10 ans en moyenne nationale). Vérifiez le montant exact sur votre avis d'imposition ou auprès du vendeur."
+            }}
           />
           <NumInput
             label="Assurance PNO"
@@ -85,6 +109,12 @@ export function StepCharges({ inputs, onChange }: Props) {
             unit="€/an"
             min={0}
             hint="Propriétaire Non Occupant — ~150–300 €/an"
+            info={{
+              title: "Assurance PNO",
+              definition: "Assurance Propriétaire Non Occupant : couvre les dommages causés par le logement en cas de sinistre (incendie, dégât des eaux, recours tiers) quand le locataire est absent ou non assuré.",
+              example: "Coût typique : 150–300 €/an pour un T2. Certains syndics l'exigent en copropriété.",
+              warning: "Obligatoire en copropriété (loi ALUR 2014). Elle complète et ne remplace pas l'assurance habitation du locataire."
+            }}
           />
         </div>
       </div>
@@ -113,6 +143,12 @@ export function StepCharges({ inputs, onChange }: Props) {
             unit="€/an"
             min={0}
             hint={`Ref: ~${(inputs.surface * 5).toFixed(0)}–${(inputs.surface * 10).toFixed(0)} €/an`}
+            info={{
+              title: "Entretien & petites réparations",
+              definition: "Provision annuelle pour les petites réparations locatives à votre charge : remplacement chauffe-eau, robinetterie, serrurerie, peinture entre deux locataires, etc.",
+              example: "La règle courante : prévoir 5–10 €/m²/an. Pour 45 m², soit 225–450 €/an. Un bien vieillissant ou énergivore nécessite plus.",
+              warning: "Ne pas confondre avec les travaux de rénovation (budget travaux initial). Ces dépenses récurrentes réduisent votre rendement net chaque année."
+            }}
           />
         </div>
 

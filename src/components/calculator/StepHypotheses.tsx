@@ -33,6 +33,12 @@ export function StepHypotheses({ inputs, onChange }: Props) {
           min={1}
           max={50}
           hint="Horizon de simulation et calcul de plus-value"
+          info={{
+            title: "Durée de détention",
+            definition: "Nombre d'années pendant lesquelles vous conservez le bien avant de le revendre. Détermine les abattements sur la plus-value immobilière.",
+            example: "Détenir 22 ans → exonération totale d'IR sur la plus-value. Détenir 30 ans → exonération totale d'IR + prélèvements sociaux (17.2%).",
+            warning: "En dessous de 5 ans, aucun abattement. La plus-value est taxée à 19% d'IR + 17.2% de PS = 36.2% — pensez-y avant de revendre tôt."
+          }}
         />
         <div className="flex flex-col gap-1">
           <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
@@ -63,6 +69,12 @@ export function StepHypotheses({ inputs, onChange }: Props) {
             unit="% /an"
             min={-5} max={10} step={0.1}
             hint="Historique Toulouse : ~2–3% /an"
+            info={{
+              title: "Revalorisation du bien",
+              definition: "Taux annuel de hausse supposée du prix de revente. Influence directement la plus-value calculée à l'horizon de détention choisi.",
+              example: "À +2%/an sur 15 ans, un bien acheté 200 000 € vaudrait ~270 000 € à la revente — avant impôt sur la plus-value.",
+              warning: "L'immobilier peut aussi baisser. Toulouse a connu +3%/an sur 10 ans mais des corrections de -5 à -10% restent possibles."
+            }}
           />
           <NumInput
             label="Loyer (IRL)"
@@ -71,6 +83,12 @@ export function StepHypotheses({ inputs, onChange }: Props) {
             unit="% /an"
             min={0} max={8} step={0.1}
             hint="IRL 2024 : ~2.5%"
+            info={{
+              title: "Indice de Référence des Loyers (IRL)",
+              definition: "Indice publié trimestriellement par l'INSEE qui plafonne la révision annuelle des loyers en cours de bail. Votre loyer ne peut augmenter que de ce taux chaque année.",
+              example: "IRL T3 2024 : +2.47%. Un loyer de 700 €/mois pourrait passer à ~717 €/mois lors de la révision annuelle.",
+              warning: "La révision n'est pas automatique — elle doit être prévue dans le bail et réclamée dans les délais, sinon vous perdez rétroactivement la hausse."
+            }}
           />
           <NumInput
             label="Charges"

@@ -52,6 +52,12 @@ export function StepFinancement({ inputs, onChange }: Props) {
           min={0}
           step={1000}
           hint="Frais de notaire généralement hors emprunt"
+          info={{
+            title: "Apport personnel",
+            definition: "Somme investie de votre poche, déduite du montant à emprunter. Plus l'apport est élevé, moins vous empruntez mais moins vous profitez de l'effet de levier.",
+            example: "Pour un bien à 200 000 €, un apport de 40 000 € (20%) donne un emprunt de ~175 000 € (prix + frais de notaire - apport).",
+            warning: "Un apport trop faible augmente le LTV et peut faire refuser le prêt. Les banques demandent souvent au moins les frais de notaire."
+          }}
         />
         <NumInput
           label="Taux d'intérêt"
@@ -62,6 +68,12 @@ export function StepFinancement({ inputs, onChange }: Props) {
           max={15}
           step={0.05}
           hint="Taux fixe hors assurance"
+          info={{
+            title: "Taux d'intérêt",
+            definition: "Taux nominal annuel du crédit immobilier, hors assurance emprunteur. C'est le coût pur de l'emprunt versé à la banque.",
+            example: "En avril 2026, les taux fixes sont ~3.3% sur 15 ans, ~3.5% sur 20 ans, ~3.7% sur 25 ans (hors profil et négociation).",
+            warning: "Le TAEG (taux global) inclut en plus l'assurance et les frais de dossier — c'est lui qui permet de comparer vraiment."
+          }}
         />
       </div>
 
@@ -74,6 +86,12 @@ export function StepFinancement({ inputs, onChange }: Props) {
           min={1}
           max={30}
           hint="Généralement 15–25 ans en investissement locatif"
+          info={{
+            title: "Durée du prêt",
+            definition: "Nombre d'années sur lesquelles vous remboursez le crédit. Une durée longue réduit la mensualité mais augmente le coût total des intérêts.",
+            example: "Sur 200 000 € à 3.5% : mensualité de ~1 429 €/mois sur 15 ans vs ~1 160 €/mois sur 20 ans. Mais le coût total est ~36k€ de plus sur 20 ans.",
+            warning: "En investissement locatif, maximiser la durée pour réduire l'effort mensuel est souvent plus pertinent qu'optimiser le coût des intérêts."
+          }}
         />
         <NumInput
           label="Assurance emprunteur"
@@ -84,6 +102,12 @@ export function StepFinancement({ inputs, onChange }: Props) {
           max={2}
           step={0.01}
           hint="Taux ADI — 0.25–0.45% typique"
+          info={{
+            title: "Assurance emprunteur (ADI)",
+            definition: "Assurance Décès-Invalidité obligatoire pour obtenir un prêt immobilier. Elle rembourse la banque si vous décédez ou devenez invalide.",
+            example: "Sur 200 000 € à 0.35% : ~700 €/an d'assurance soit ~58 €/mois en sus de la mensualité.",
+            warning: "Depuis la loi Lemoine (2022), vous pouvez changer d'assurance à tout moment — la délégation peut faire économiser 0.2–0.5% par an."
+          }}
         />
       </div>
 

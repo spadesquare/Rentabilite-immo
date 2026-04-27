@@ -8,6 +8,7 @@ import { StepFinancement } from "./StepFinancement"
 import { StepCharges } from "./StepCharges"
 import { StepFiscalite } from "./StepFiscalite"
 import { StepHypotheses } from "./StepHypotheses"
+import { ScraperInput } from "./ScraperInput"
 import { TOULOUSE_ZONES } from "@/data/toulouse"
 import { Calculator as CalcIcon, ChevronRight, ChevronLeft } from "lucide-react"
 
@@ -80,6 +81,9 @@ export function Calculator({ onCalculate }: Props) {
 
   return (
     <GlassCard strong className="p-6 md:p-8">
+      {/* Scraper */}
+      <ScraperInput onFill={patch} />
+
       {/* Step indicators */}
       <div className="flex items-center gap-1 mb-8 overflow-x-auto pb-1">
         {STEPS.map((s, i) => (

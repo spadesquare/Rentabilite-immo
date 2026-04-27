@@ -1,6 +1,7 @@
 "use client"
 
 import { cn } from "@/lib/utils"
+import { InfoFlipCard, type InfoCardContent } from "./InfoFlipCard"
 
 interface NumInputProps {
   label: string
@@ -13,12 +14,16 @@ interface NumInputProps {
   hint?: string
   className?: string
   disabled?: boolean
+  info?: InfoCardContent
 }
 
-export function NumInput({ label, value, onChange, unit, min, max, step = 1, hint, className, disabled }: NumInputProps) {
+export function NumInput({ label, value, onChange, unit, min, max, step = 1, hint, className, disabled, info }: NumInputProps) {
   return (
     <div className={cn("flex flex-col gap-1", className)}>
-      <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide">{label}</label>
+      <div className="flex items-center gap-1.5">
+        <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide">{label}</label>
+        {info && <InfoFlipCard {...info} />}
+      </div>
       <div className="relative flex items-center">
         <input
           type="number"
