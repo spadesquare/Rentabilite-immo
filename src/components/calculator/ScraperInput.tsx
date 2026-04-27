@@ -12,6 +12,22 @@ interface Props {
 
 type Status = "idle" | "loading" | "success" | "error"
 
+const FIELD_LABELS: Record<string, string> = {
+  prix: "Prix d'achat",
+  surface: "Surface",
+  type_bien: "Type (ancien/neuf)",
+  frais_agence: "Frais d'agence",
+  travaux: "Travaux",
+  mobilier: "Mobilier",
+  age_bien: "Âge du bien",
+  dpe: "DPE",
+  zone_toulouse: "Zone",
+  charges_copro_annuelles: "Charges copro",
+  taxe_fonciere: "Taxe foncière",
+  loyer_hc: "Loyer HC",
+  charges_recuperables: "Charges locataire",
+}
+
 export function ScraperInput({ onFill }: Props) {
   const [url, setUrl] = useState("")
   const [status, setStatus] = useState<Status>("idle")
@@ -41,17 +57,35 @@ export function ScraperInput({ onFill }: Props) {
       const patch: Partial<CalculatorInputs> = {}
       const labels: string[] = []
 
-      if (data.prix) { patch.prix = data.prix; labels.push("Prix d'achat") }
-      if (data.surface) { patch.surface = data.surface; labels.push("Surface") }
-      if (data.type_bien) { patch.type_bien = data.type_bien; labels.push("Type") }
-      if (data.zone_toulouse) { patch.zone_toulouse = data.zone_toulouse; labels.push("Zone") }
-      if (data.loyer_estime) { patch.loyer_hc = data.loyer_estime; labels.push("Loyer estimé") }
-      if (data.travaux) { patch.travaux = data.travaux; labels.push("Travaux") }
-      if (data.age_bien) { patch.age_bien = data.age_bien; labels.push("Âge") }
+      function set<K extends keyof CalculatorInputs>(key: K, val: CalculatorInputs[K] | undefined) {
+        if (val === undefined || val === null) return
+        ;(patch as Record<string, unknown>)[key] = val
+        labels.push(FIELD_LABELS[key] ?? key)
+      }
+
+      set("prix", data.prix)
+      set("surface", data.surface)
+      set("type_bien", data.type_bien)
+      set("frais_agence", data.frais_agence)
+      set("travaux", data.travaux)
+      set("mobilier", data.mobilier)
+      set("age_bien", data.age_bien)
+      set("dpe", data.dpe)
+      set("zone_toulouse", data.zone_toulouse)
+      set("charges_copro_annuelles", data.charges_copro_annuelles)
+      set("taxe_fonciere", data.taxe_fonciere)
+      set("loyer_hc", data.loyer_hc)
+      set("charges_recuperables", data.charges_recuperables)
+
+      // Infer regime from meublé
+      if (data.meuble && !patch.regime) {
+        set("regime", "lmnp_reel")
+        labels.push("Régime LMNP")
+      }
 
       if (labels.length === 0) {
         setStatus("error")
-        setMessage("Aucune donnée exploitable trouvée dans cette annonce.")
+        setMessage("Aucune donnée exploitable trouvée dans cette annonce. Le site bloque peut-être le scraping.")
         return
       }
 
@@ -61,7 +95,7 @@ export function ScraperInput({ onFill }: Props) {
       setMessage(`Données importées depuis ${data.source ?? "l'annonce"}`)
     } catch {
       setStatus("error")
-      setMessage("Impossible de contacter le serveur de scraping.")
+      setMessage("Impossible de contacter le serveur.")
     }
   }
 
@@ -120,8 +154,9 @@ export function ScraperInput({ onFill }: Props) {
                 <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5 shrink-0" />
                 <div>
                   <p className="text-xs font-semibold text-emerald-700">{message}</p>
-                  <p className="text-xs text-emerald-600 mt-0.5">
-                    Champs remplis : {filled.join(", ")}. Vérifiez et complétez les valeurs manquantes.
+                  <p className="text-xs text-emerald-600 mt-0.5 leading-relaxed">
+                    <span className="font-medium">{filled.length} champ{filled.length > 1 ? "s" : ""} rempli{filled.length > 1 ? "s" : ""} :</span>{" "}
+                    {filled.join(", ")}. Vérifiez et complétez les valeurs manquantes.
                   </p>
                 </div>
               </div>
